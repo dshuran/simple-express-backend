@@ -1,6 +1,10 @@
 const express = require('express')
+const bodyParser = require("body-parser");
 const app = express()
 const port = 3000
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 /*
     Хранит объекты со свойствами id и title
@@ -18,6 +22,14 @@ app.get('/tasks/:id', (req, res) => {
         res.send('Task not found!')
     }
 })
+
+app.post('/addtask',(request,response) => {
+    //code to perform particular action.
+    //To access POST variable use req.body()methods.
+    console.log(request.body);
+    tasks.push(request.body);
+    response.send('Task added');
+});
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
