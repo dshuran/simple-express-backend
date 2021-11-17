@@ -8,23 +8,34 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'build')));
 
-/*app.get('/tasks/:id', (req, res) => {
-    let result = tasks.find((task) => {
-        return task.id === req.params.id
+// Данные о записях, которые пользователи сделали. Используем вместо БД для простоты.
+const entries = [];
+
+app.get('/entries/:id', (req, res) => {
+    let result = entries.find((entry) => {
+        console.log(`id = ${req.params.id} entry id = ${entry.id}`)
+        return entry.id.toString() === req.params.id.toString()
     })
 
     if (result) {
-        res.send(`Task id = ${result.id}\n Task title = ${result.title}`)
+        res.send(result);
     } else {
-        res.send('Task not found!')
+        res.status(404);
+        res.send('Could not find entry!');
     }
-})*/
+})
 
-app.post('/addentry',(request,response) => {
-    //code to perform particular action.
-    //To access POST variable use req.body()methods.
-    console.log(request.body);
-    response.send('Task added');
+app.post('/entries/add',(request,response) => {
+    // TODO: Some data validation
+    const entry = {
+        username: request.body.username,
+        entryDate: request.body['entry-date'],
+        id: entries.length
+    }
+
+    entries.push(entry);
+
+    response.send(`Added entry id = ${entry.id}`);
 });
 
 app.get('/', function (req, res) {
