@@ -1,17 +1,14 @@
 const express = require('express')
-const bodyParser = require("body-parser");
+const bodyParser = require("body-parser")
 const app = express()
+const path = require('path')
 const port = 4000
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'build')));
 
-/*
-    Хранит объекты со свойствами id и title
- */
-const tasks = [];
-
-app.get('/tasks/:id', (req, res) => {
+/*app.get('/tasks/:id', (req, res) => {
     let result = tasks.find((task) => {
         return task.id === req.params.id
     })
@@ -21,7 +18,7 @@ app.get('/tasks/:id', (req, res) => {
     } else {
         res.send('Task not found!')
     }
-})
+})*/
 
 app.post('/addentry',(request,response) => {
     //code to perform particular action.
@@ -30,9 +27,9 @@ app.post('/addentry',(request,response) => {
     response.send('Task added');
 });
 
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-})
+app.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
