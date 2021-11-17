@@ -13,7 +13,6 @@ const entries = [];
 
 app.get('/entries/:id', (req, res) => {
     let result = entries.find((entry) => {
-        console.log(`id = ${req.params.id} entry id = ${entry.id}`)
         return entry.id.toString() === req.params.id.toString()
     })
 
