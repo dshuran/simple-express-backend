@@ -23,11 +23,10 @@ app.get('/tasks/:id', (req, res) => {
     }
 })
 
-app.post('/addtask',(request,response) => {
+app.post('/addentry',(request,response) => {
     //code to perform particular action.
     //To access POST variable use req.body()methods.
     console.log(request.body);
-    tasks.push(request.body);
     response.send('Task added');
 });
 
